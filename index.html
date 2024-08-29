@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Include Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="main-container">
+        <div class="first-box">
+            <p>{%cityName%}</p>
+            <p id="dateTime">MON | 22 Aug | 5:30am</p>
+        </div>
+        <div class="second-box">
+            <div class="status-box">
+                <div class="icon-box">
+                    <i class="fa-solid fa-sun"></i>
+                </div>
+                <div class="status-text">
+                    <p id="weather-status">{%tempStatus%}</p>
+                </div>
+            </div>
+            <div class="temp-box">
+                <div class="temp">
+                    <p>{%tempVal%}<span class="degree">&deg</span></p>
+                </div>
+                <div class="minMax-temp">
+                    <p>{%minTemp%}&degC</p>
+                    <hr>
+                    <p>{%maxTemp%}&degC</p>
+                </div>
+            </div>
+        </div>
+        <div class="third-box">
+            <div class="realFeel">
+                <div class="info">
+                    <p class="heading">Real Feel</p>
+                    <p class="value">{%realValue%}&degC</p>
+                </div>
+                <div class="infoImg">
+                    <i class="fa-solid fa-temperature-high" style="font-size: 30px; color: #d2d6e0;"></i>
+                </div>
+            </div>
+            <div class="pressure">
+                <div class="info">
+                    <p class="heading">Pressure</p>
+                    <p class="value">{%pressureValue%}</p>
+                </div>
+                <div class="infoImg">
+                    <i class="fa-solid fa-hourglass-end" style="font-size: 30px; color: #d2d6e0;"></i>
+                </div>
+            </div>
+            <div class="humidity">
+                <div class="info">
+                    <p class="heading">Humidity</p>
+                    <p class="value">{%humidityValue%}%</p>
+                </div>
+                <div class="infoImg">
+                    <i class="fa-solid fa-cloud-rain" style="font-size: 30px; color: #d2d6e0;"></i>
+                </div>
+            </div>
+            <div class="wind">
+                <div class="info">
+                    <p class="heading">Wind</p>
+                    <p class="value">{%windValue%}</p>
+                </div>
+                <div class="infoImg">
+                    <i class="fa-solid fa-wind" style="font-size: 30px; color: #d2d6e0;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const day = ["SUN", "MON", "TUES", "WED", "THURS", "FRI", "SAT"];
+        const month = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+        const date = new Date();
+        const dayValue = day[date.getDay()];
+        const monthValue = month[date.getMonth()];
+        const dateValue = date.getDate();
+        
+        const time = new Date().toLocaleTimeString(); 
+        const [samay, period] = time.split(' '); 
+        const [hour, minute] = samay.split(':');
+        const dateTime = document.getElementById("dateTime");
+        dateTime.innerHTML = `${dayValue} | ${dateValue} ${monthValue} | ${hour}:${minute} ${period}`;
+
+        const status = document.getElementById("weather-status").textContent.trim();
+        console.log("Weather status:", status); 
+        const iconDiv = document.getElementsByClassName("icon-box")[0];
+       const mainContainer = document.getElementsByClassName("main-container")[0];
+       var body = document.getElementsByTagName('body')[0];
+        
+
+        if (status.toLowerCase() === "clear" || status.toLowerCase() === "clear sky") {
+            iconDiv.innerHTML = '<i class="fa-solid fa-sun" style="font-size: 30px; color: white;"></i>';
+            mainContainer.style.background = "linear-gradient(to bottom, #50d0ff  10%, #6dd7ff 45%,#8eb8c7 99%)";
+            body.style.backgroundImage = 'url(https://images.pexels.com/photos/96622/pexels-photo-96622.jpeg?auto=compress&cs=tinysrgb&w=600)';
+        }  
+
+
+        else if (status.toLowerCase() === "clouds") {
+            iconDiv.innerHTML = '<i class="fa fa-cloud" aria-hidden="true" style="font-size: 30px; color: white;"></i>';
+            mainContainer.style.background = "linear-gradient(to bottom, #73a8bb, #88afc8 , #6f797c)";
+            body.style.backgroundImage = 'url(https://images.pexels.com/photos/19670/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=600)';
+        }
+
+
+        else if (status.toLowerCase() === "rain") {
+            iconDiv.innerHTML = '<i class="fa-solid fa-cloud-showers-heavy" style="font-size: 30px; color: white;"></i>';
+            mainContainer.style.background = "linear-gradient(to bottom, #7591c3, #9b87a5 ,#ccaaa5)";
+            body.style.backgroundImage = 'url(https://images.pexels.com/photos/311039/pexels-photo-311039.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)';
+
+        }
+
+
+        else if (status.toLowerCase() === "thunderstorm") {
+            iconDiv.innerHTML = '<i class="fa-solid fa-cloud-bolt" style="font-size: 30px; color: white;"></i>';
+            mainContainer.style.background = "linear-gradient(to bottom, #0f2027, #203a43, #2c5364)";
+            body.style.backgroundImage = 'url(https://images.pexels.com/photos/2947810/pexels-photo-2947810.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)';
+        }
+
+
+        else if (status.toLowerCase() === "snow") {
+            iconDiv.innerHTML = '<i class="fa-solid fa-snowflake" style="font-size: 30px; color: white;"></i>';
+            mainContainer.style.background = "linear-gradient(to bottom,#e0eafc, #d2e3fa , #a4afc3)";
+            body.style.backgroundImage = 'url(https://images.pexels.com/photos/1398049/pexels-photo-1398049.jpeg?auto=compress&cs=tinysrgb&w=600)';
+        }
+
+
+
+        else if (status.toLowerCase() === "mist") {
+            iconDiv.innerHTML = '<i class="fa-solid fa-smog" style="font-size: 30px; color: white;"></i>';
+            mainContainer.style.background = "linear-gradient(to bottom, #841162, #ae2047 , #f24c3b)";
+            body.style.backgroundImage = 'url(https://images.pexels.com/photos/159020/sunset-sky-afterglow-evening-sky-159020.jpeg?auto=compress&cs=tinysrgb&w=600)';
+} 
+
+
+
+        else {
+        console.log("No matching status found for: ", status);
+         mainContainer.style.background = "linear-gradient(to bottom,  #50d0ff, #6dd7ff,#eefcff)"; 
+         body.style.backgroundImage = 'url(https://images.pexels.com/photos/19670/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=600)';
+        }
+    </script>
+</body>
+</html>
